@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import pangian.car.studentdata.Lesson.LessonActivity;
+import pangian.car.studentdata.Lesson.LessonAdderActivity;
 import pangian.car.studentdata.Student.AllStudentsActivity;
 import pangian.car.studentdata.Student.StudentAdderActivity;
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.lesson_adder:
-                         intent = new Intent(MainActivity.this, LessonActivity.class);
+                         intent = new Intent(MainActivity.this, LessonAdderActivity.class);
                         startActivity(intent);
                         break;
                 }

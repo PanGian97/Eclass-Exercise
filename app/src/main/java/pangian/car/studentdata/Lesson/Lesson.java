@@ -5,11 +5,16 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "lesson_table")
 public class Lesson {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     int id;
     String name;
 
-    public Lesson( String name) {
+    public Lesson(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Lesson(String name) {
         this.name = name;
     }
 
