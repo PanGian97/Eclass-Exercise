@@ -3,11 +3,13 @@ package pangian.car.studentdata.Student;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import pangian.car.studentdata.R;
 
@@ -53,6 +55,12 @@ public class StudentAdderActivity extends AppCompatActivity {
             }
         });
 
+    studentViewModel.messageHandler().observe(this, new Observer<String>() {
+        @Override
+        public void onChanged(String message) {
+            Toast.makeText(StudentAdderActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+    });
 
     }
 }

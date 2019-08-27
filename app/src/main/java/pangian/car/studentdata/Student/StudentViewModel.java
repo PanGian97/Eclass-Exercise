@@ -29,6 +29,7 @@ public class StudentViewModel extends AndroidViewModel {
     public LiveData<List<Student>> getAllStudents(){
         return studentRepository.getAllStudents();
     }
+    public LiveData<String> messageHandler(){return studentRepository.messageHandler();}
 
     public void addStudent(int am,String name,String surname){
          studentRepository.checkIfStudentExists(new Student(am,name,surname));

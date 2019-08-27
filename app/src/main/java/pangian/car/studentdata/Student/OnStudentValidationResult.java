@@ -2,5 +2,5 @@ package pangian.car.studentdata.Student;
 
 public interface OnStudentValidationResult {
 
-  void validateStudent(Student student);
+  void validateStudent(int duplicates);
 }

@@ -15,7 +15,8 @@ class StudentRepository implements OnStudentValidationResult{
 
     private StudentDao studentDao;
     private LiveData<List<Student>> allStudents;
-    MutableLiveData<Student> studentForVerification = ;
+    MutableLiveData<Student> studentForVerification = new MutableLiveData<>();
+    MutableLiveData<String> messageToBeShown = new MutableLiveData<>();
 
 
     public StudentRepository(Application application) {
@@ -39,7 +40,8 @@ class StudentRepository implements OnStudentValidationResult{
 
 
     public void checkIfStudentExists(Student student) {
-        new validateStudent(studentDao).execute(student);
+        studentForVerification.setValue(student);
+        new validateStudent(studentDao,this).execute(student);
     }
 
 
@@ -76,7 +78,7 @@ class StudentRepository implements OnStudentValidationResult{
     }
 
 
-    private static class validateStudent extends AsyncTask<Student, Void, Student> {
+    private static class validateStudent extends AsyncTask<Student, Void, Integer> {
         private StudentDao studentDao;
         private OnStudentValidationResult listener;
         public validateStudent(StudentDao studentDao,OnStudentValidationResult listener) {
@@ -87,22 +89,31 @@ class StudentRepository implements OnStudentValidationResult{
 
 
         @Override
-        protected Student doInBackground(Student... students) {
-               studentDao.isStudentValid(students[0].am);
-               return students[0];
+        protected Integer doInBackground(Student... students) {
+              return studentDao.isStudentValid(students[0].am);
+
         }
 
         @Override
-        protected void onPostExecute(Student student) {
-            super.onPostExecute(student);
-            listener.validateStudent(student);
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            listener.validateStudent(integer);
         }
     }
 
 
     @Override
-    public void validateStudent(Student student) {
-       if(student.am)
+    public void validateStudent(int duplicates) {
+       if(duplicates==0){
+           insertStudent(studentForVerification.getValue());
+       }
+       else{
+           messageToBeShown.setValue("Student with this AM already exists");
+       }
+    }
+
+   LiveData<String> messageHandler(){
+        return messageToBeShown;
     }
 
 }
