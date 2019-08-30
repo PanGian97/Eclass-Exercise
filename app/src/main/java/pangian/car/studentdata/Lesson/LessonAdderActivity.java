@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import pangian.car.studentdata.R;
@@ -23,7 +25,7 @@ public class LessonAdderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lesson_adder);
         lessonName = findViewById(R.id.lesson_name);
         addLessonBtn = findViewById(R.id.add_lesson_btn);
-        lessonId=findViewById(R.id.lesson_id);
+        lessonId=findViewById(R.id.lesson_item_id);
 
         lessonViewModel = ViewModelProviders.of(this).get(LessonViewModel.class);
     }
@@ -41,6 +43,13 @@ public class LessonAdderActivity extends AppCompatActivity {
                 lessonViewModel.addLesson( Integer.parseInt(id),lessonName.getText().toString());
                 }
 
+        });
+
+        lessonViewModel.messageHandler().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                Toast.makeText(LessonAdderActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

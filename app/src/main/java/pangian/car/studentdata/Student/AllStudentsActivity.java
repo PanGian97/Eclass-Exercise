@@ -11,13 +11,13 @@ import android.os.Bundle;
 import java.util.List;
 
 import pangian.car.studentdata.R;
-import pangian.car.studentdata.Student.RecView.MyAdapter;
+import pangian.car.studentdata.Student.RecView.StudentsAdapter;
 
 public class AllStudentsActivity extends AppCompatActivity {
 
     StudentViewModel studentViewModel;
     private RecyclerView recyclerView;
-    private MyAdapter studentAdapter;
+    private StudentsAdapter studentsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +39,15 @@ public class AllStudentsActivity extends AppCompatActivity {
         studentViewModel.getAllStudents().observe(this, new Observer<List<Student>>() {
             @Override
             public void onChanged(List<Student> students) {
-                studentAdapter.setStudents(students);
+                studentsAdapter.setStudents(students);
             }
         });
     }
 
     private void initRecView() {
-        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.students_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        studentAdapter = new MyAdapter();
-        recyclerView.setAdapter(studentAdapter);
+        studentsAdapter = new StudentsAdapter();
+        recyclerView.setAdapter(studentsAdapter);
     }
 }

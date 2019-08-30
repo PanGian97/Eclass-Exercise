@@ -21,4 +21,7 @@ public interface LessonDao {
 
     @Query("SELECT * FROM lesson_table ORDER BY id ASC")
     LiveData<List<Lesson>> getAllLessons();
+
+    @Query("SELECT COUNT(*) FROM lesson_table WHERE id =:lessonId")
+    int isLessonValid( int lessonId);
 }

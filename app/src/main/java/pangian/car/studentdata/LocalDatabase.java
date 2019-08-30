@@ -55,7 +55,7 @@ public abstract class LocalDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             studentDao.insertStudent(new Student(15445,"Panagiotis","Giannelos"));
-            lessonDao.insertLesson(new Lesson("Ma8imatika"));
+            lessonDao.insertLesson(new Lesson(1,"Ma8imatika"));
             return null;
         }
     }

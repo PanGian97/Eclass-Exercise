@@ -3,7 +3,10 @@ package pangian.car.studentdata.Lesson;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
 
 import pangian.car.studentdata.LocalDatabase;
 import pangian.car.studentdata.Student.Student;
@@ -19,6 +22,26 @@ class LessonRepository implements OnLessonValidationResult{
         lessonDao = database.lessonDao();
 
     }
+
+
+    public void insertLesson(Lesson lesson) {
+        new InsertLessonAsyncTask(lessonDao).execute(lesson);
+    }
+
+    private static class InsertLessonAsyncTask extends AsyncTask<Lesson, Void, Void> {
+        private LessonDao lessonDao;
+
+        private InsertLessonAsyncTask(LessonDao lessonDao) {
+            this.lessonDao = lessonDao;
+        }
+
+        @Override
+        protected Void doInBackground(Lesson...lessons) {
+            lessonDao.insertLesson(lessons[0]);
+            return null;
+        }
+    }
+
 
     public void checkIfLessonExists(Lesson lesson) {
 
@@ -52,7 +75,18 @@ class LessonRepository implements OnLessonValidationResult{
 
     @Override
     public void validateLesson(int duplicates) {
-
+        if(duplicates==0){
+            insertLesson(lessonForVerification.getValue());
+        }
+        else{
+            messageToBeShown.setValue("Lesson with this ID already exists");
+        }
     }
 
+    LiveData<String> messageHandler(){
+        return messageToBeShown;
+    }
+    LiveData<List<Lesson>> getAllLessons() {
+        return lessonDao.getAllLessons();
+    }
 }

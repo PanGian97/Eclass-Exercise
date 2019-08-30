@@ -7,23 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import pangian.car.studentdata.Lesson.AllLessonsActivity;
 import pangian.car.studentdata.Lesson.LessonAdderActivity;
 import pangian.car.studentdata.Student.AllStudentsActivity;
 import pangian.car.studentdata.Student.StudentAdderActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton stdntLogin;
-    ImageButton stdntSignup;
-    ImageButton lessonAdder;
+    ImageButton studentsAdder;
+    ImageButton studentView;
+    ImageButton lessonsAdder;
+    ImageButton lessonsView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        stdntLogin = findViewById(R.id.student_login);
-         stdntSignup = findViewById(R.id.student_signup);
-         lessonAdder = findViewById(R.id.lesson_adder);
+        studentsAdder = findViewById(R.id.students_adder);
+         studentView = findViewById(R.id.students_view);
+         lessonsAdder = findViewById(R.id.lessons_adder);
+         lessonsView = findViewById(R.id.lessons_view);
     }
 
     @Override
@@ -36,24 +39,28 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent;
                 switch (v.getId()){
 
-                    case R.id.student_login:
+                    case R.id.students_adder:
                          intent = new Intent(MainActivity.this, StudentAdderActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.student_signup:
+                    case R.id.students_view:
                         intent = new Intent(MainActivity.this, AllStudentsActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.lesson_adder:
+                    case R.id.lessons_adder:
                          intent = new Intent(MainActivity.this, LessonAdderActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.lessons_view:
+                        intent = new Intent(MainActivity.this, AllLessonsActivity.class);
+                        startActivity(intent);
                 }
             }
         };
 
-        stdntLogin.setOnClickListener(clickListener);
-        stdntSignup.setOnClickListener(clickListener);
-        lessonAdder.setOnClickListener(clickListener);
+        studentsAdder.setOnClickListener(clickListener);
+        studentView.setOnClickListener(clickListener);
+        lessonsAdder.setOnClickListener(clickListener);
+        lessonsView.setOnClickListener(clickListener);
     }
 }

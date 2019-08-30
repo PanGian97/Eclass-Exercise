@@ -10,9 +10,7 @@ import java.util.List;
 
 public class StudentViewModel extends AndroidViewModel {
 
-
-    StudentRepository studentRepository ;
-
+    StudentRepository studentRepository;
 
     public StudentViewModel(@NonNull Application application) {
         super(application);
@@ -20,19 +18,21 @@ public class StudentViewModel extends AndroidViewModel {
 
     }
 
-    public void insertStudent(Student student){
-        studentRepository.insertStudent(student);
-    }
-    public void deleteStudent(Student student){
+
+    public void deleteStudent(Student student) {
         studentRepository.deleteStudent(student);
     }
-    public LiveData<List<Student>> getAllStudents(){
+
+    public LiveData<List<Student>> getAllStudents() {
         return studentRepository.getAllStudents();
     }
-    public LiveData<String> messageHandler(){return studentRepository.messageHandler();}
 
-    public void addStudent(int am,String name,String surname){
-         studentRepository.checkIfStudentExists(new Student(am,name,surname));
+    public LiveData<String> messageHandler() {
+        return studentRepository.messageHandler();
+    }
+
+    public void addStudent(int am, String name, String surname) {
+        studentRepository.checkIfStudentExists(new Student(am, name, surname));
 
 
     }

@@ -8,9 +8,9 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/student_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/students_view"
+        android:layout_width="147dp"
+        android:layout_height="104dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -18,10 +18,10 @@
         app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@color/design_default_color_primary" />
 
     <ImageButton
-        android:id="@+id/student_login"
+        android:id="@+id/students_adder"
         android:layout_width="147dp"
         android:layout_height="104dp"
         android:layout_marginStart="8dp"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/student_signup"
+        app:layout_constraintTop_toBottomOf="@+id/students_view"
         tools:srcCompat="@tools:sample/backgrounds/scenic[3]" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -40,16 +40,28 @@
         app:layout_constraintGuide_begin="199dp" />
 
     <ImageButton
-        android:id="@+id/lesson_adder"
-        android:layout_width="166dp"
-        android:layout_height="174dp"
+        android:id="@+id/lessons_adder"
+        android:layout_width="147dp"
+        android:layout_height="104dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/student_signup"
+        app:layout_constraintBottom_toBottomOf="@+id/students_adder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/student_signup"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/lessons_view"
+        app:layout_constraintVertical_bias="1.0"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[5]" />
+
+    <ImageButton
+        android:id="@+id/lessons_view"
+        android:layout_width="147dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic[5]" />
 </androidx.constraintlayout.widget.ConstraintLayout>

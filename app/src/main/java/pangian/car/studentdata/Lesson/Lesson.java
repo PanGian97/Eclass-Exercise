@@ -14,9 +14,6 @@ public class Lesson {
         this.name = name;
     }
 
-    public Lesson(String name) {
-        this.name = name;
-    }
 
     public int getId() {
         return id;

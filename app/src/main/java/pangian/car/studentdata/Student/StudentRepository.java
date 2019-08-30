@@ -14,7 +14,6 @@ class StudentRepository implements OnStudentValidationResult{
 
 
     private StudentDao studentDao;
-    private LiveData<List<Student>> allStudents;
     MutableLiveData<Student> studentForVerification = new MutableLiveData<>();
     MutableLiveData<String> messageToBeShown = new MutableLiveData<>();
 
