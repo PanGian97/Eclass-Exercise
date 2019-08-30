@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import pangian.car.studentdata.TaskHandler;
+
 public class StudentViewModel extends AndroidViewModel {
 
     StudentRepository studentRepository;
@@ -19,9 +21,6 @@ public class StudentViewModel extends AndroidViewModel {
     }
 
 
-    public void deleteStudent(Student student) {
-        studentRepository.deleteStudent(student);
-    }
 
     public LiveData<List<Student>> getAllStudents() {
         return studentRepository.getAllStudents();
@@ -35,6 +34,9 @@ public class StudentViewModel extends AndroidViewModel {
         studentRepository.checkIfStudentExists(new Student(am, name, surname));
 
 
+    }
+    public LiveData<TaskHandler> taskHandler(){
+        return studentRepository.taskHandler();
     }
 
 

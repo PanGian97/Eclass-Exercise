@@ -1,5 +1,6 @@
 package pangian.car.studentdata.Lesson;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import pangian.car.studentdata.R;
+import pangian.car.studentdata.TaskHandler;
 
 public class LessonAdderActivity extends AppCompatActivity {
 
@@ -48,8 +50,26 @@ public class LessonAdderActivity extends AppCompatActivity {
         lessonViewModel.messageHandler().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String message) {
+
                 Toast.makeText(LessonAdderActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        lessonViewModel.taskHandler().observe(this, new Observer<TaskHandler>() {
+            @Override
+            public void onChanged(TaskHandler taskHandler) {
+                switch (taskHandler){
+                    case REDIRECT: Intent intent = new Intent
+                            (LessonAdderActivity.this,AllLessonsActivity.class);
+                    startActivity(intent);
+                finish();
+
+          break;
+
+                }
+            }
+        });
     }
+
 }

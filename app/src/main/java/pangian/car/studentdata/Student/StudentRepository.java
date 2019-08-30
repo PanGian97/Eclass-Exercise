@@ -8,14 +8,20 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import io.reactivex.CompletableObserver;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import pangian.car.studentdata.LocalDatabase;
+import pangian.car.studentdata.TaskHandler;
 
-class StudentRepository implements OnStudentValidationResult{
+class StudentRepository {
 
 
     private StudentDao studentDao;
-    MutableLiveData<Student> studentForVerification = new MutableLiveData<>();
     MutableLiveData<String> messageToBeShown = new MutableLiveData<>();
+    MutableLiveData<TaskHandler> tasksToBeDone = new MutableLiveData<>();
 
 
     public StudentRepository(Application application) {
@@ -24,13 +30,28 @@ class StudentRepository implements OnStudentValidationResult{
     }
 
     public void insertStudent(Student student) {
-        new InsertNoteAsyncTask(studentDao).execute(student);
+        studentDao.insertStudent(student).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                tasksToBeDone.setValue(TaskHandler.REDIRECT);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
 
-    public void deleteStudent(Student student) {
-        new DeleteNoteAsyncTask(studentDao).execute(student);
-    }
+
 
     public LiveData<List<Student>> getAllStudents() {
         return studentDao.getAllStudents();
@@ -39,77 +60,38 @@ class StudentRepository implements OnStudentValidationResult{
 
 
     public void checkIfStudentExists(Student student) {
-        studentForVerification.setValue(student);
-        new validateStudent(studentDao,this).execute(student);
+      studentDao.isStudentValid(student.am).subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new SingleObserver<Integer>() {
+                  @Override
+                  public void onSubscribe(Disposable d) {
+
+                  }
+
+                  @Override
+                  public void onSuccess(Integer studentInstances) {
+                      if (studentInstances == 0) {
+                          insertStudent(student);
+                      } else {
+                          messageToBeShown.setValue("Student with AM = " + student.am + " already exists");
+                      }
+                  }
+
+                  @Override
+                  public void onError(Throwable e) {
+                      messageToBeShown.setValue("Error occured with name: " + e);
+                  }
+              });
+    }
+
+    public LiveData<TaskHandler> taskHandler() {
+        return tasksToBeDone;
     }
 
 
 
 
-    private static class InsertNoteAsyncTask extends AsyncTask<Student, Void, Void> {
-        private StudentDao studentDao;
 
-        private InsertNoteAsyncTask(StudentDao studentDao) {
-            this.studentDao = studentDao;
-        }
-
-        @Override
-        protected Void doInBackground(Student... students) {
-            studentDao.insertStudent(students[0]);
-            return null;
-        }
-    }
-
-
-
-    private static class DeleteNoteAsyncTask extends AsyncTask<Student, Void, Void> {
-        private StudentDao studentDao;
-
-        private DeleteNoteAsyncTask(StudentDao studentDao) {
-            this.studentDao = studentDao;
-        }
-
-        @Override
-        protected Void doInBackground(Student... students) {
-            studentDao.deleteStudent(students[0]);
-            return null;
-        }
-    }
-
-
-    private static class validateStudent extends AsyncTask<Student, Void, Integer> {
-        private StudentDao studentDao;
-        private OnStudentValidationResult listener;
-        public validateStudent(StudentDao studentDao,OnStudentValidationResult listener) {
-            this.studentDao = studentDao;
-            this.listener=listener;
-        }
-
-
-
-        @Override
-        protected Integer doInBackground(Student... students) {
-              return studentDao.isStudentValid(students[0].am);
-
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            listener.validateStudent(integer);
-        }
-    }
-
-
-    @Override
-    public void validateStudent(int duplicates) {
-       if(duplicates==0){
-           insertStudent(studentForVerification.getValue());
-       }
-       else{
-           messageToBeShown.setValue("Student with this AM already exists");
-       }
-    }
 
    LiveData<String> messageHandler(){
         return messageToBeShown;

@@ -9,12 +9,15 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
 @Dao
 public interface LessonDao {
 
 
     @Insert()
-    void insertLesson(Lesson lesson);
+    Completable insertLesson(Lesson lesson);
 
     @Delete
     void deleteLesson(Lesson lesson);
@@ -23,5 +26,5 @@ public interface LessonDao {
     LiveData<List<Lesson>> getAllLessons();
 
     @Query("SELECT COUNT(*) FROM lesson_table WHERE id =:lessonId")
-    int isLessonValid( int lessonId);
+    Single<Integer> isLessonValid(int lessonId);
 }
