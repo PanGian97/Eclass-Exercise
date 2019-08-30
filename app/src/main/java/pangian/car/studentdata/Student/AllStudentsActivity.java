@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class AllStudentsActivity extends AppCompatActivity {
         super.onStart();
         initRecView();
         getStudents();
+        handleStudentClick();
+    }
+
+    private void handleStudentClick() {
+       studentsAdapter.g
     }
 
     private void getStudents() {
