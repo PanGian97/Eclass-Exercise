@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 import pangian.car.studentdata.Lesson.Lesson;
 import pangian.car.studentdata.R;
 
 public class LessonsAdapter extends RecyclerView.Adapter<LessonsViewHolder> {
 
     private List<Lesson> lessons = new ArrayList<>();
-
+    private final PublishSubject<Integer> onClickSubject = PublishSubject.create();
     @NonNull
     @Override
     public LessonsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,5 +49,9 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsViewHolder> {
     @Override
     public int getItemCount() {
         return lessons.size();
+    }
+
+    public Observable<Integer> getItemClickSignal() {
+        return onClickSubject;
     }
 }

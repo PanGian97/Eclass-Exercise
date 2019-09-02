@@ -19,6 +19,7 @@ public class AllLessonsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LessonsAdapter lessonsAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
