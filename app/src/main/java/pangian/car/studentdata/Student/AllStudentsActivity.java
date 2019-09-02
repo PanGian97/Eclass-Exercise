@@ -53,7 +53,7 @@ public class AllStudentsActivity extends AppCompatActivity {
 
     private void goToStudentDetails(int studentAm) {
         Intent intent = new Intent(AllStudentsActivity.this,StudentDetailsActivity.class);
-        intent.putExtra("student_am",studentAm);
+        intent.putExtra("student_am_to_details",studentAm);
         startActivity(intent);
     }
 

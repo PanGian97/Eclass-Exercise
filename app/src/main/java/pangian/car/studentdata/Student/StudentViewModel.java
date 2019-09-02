@@ -38,7 +38,7 @@ public class StudentViewModel extends AndroidViewModel {
     public void addStudent(int am, String name, String surname) {
         studentRepository.checkIfStudentExists(new Student(am, name, surname)); }
 
-        public void addStudetnLesson(int studentAm,int lessonId){
+        public void addStudentLesson(int studentAm, int lessonId){
         studentRepository.insertLessonForStudent(studentAm,lessonId);}
     public LiveData<TaskHandler> taskHandler(){
         return studentRepository.taskHandler();

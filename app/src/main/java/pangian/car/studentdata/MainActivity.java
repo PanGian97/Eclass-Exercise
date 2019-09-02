@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import pangian.car.studentdata.Lesson.AllLessonsActivity;
 import pangian.car.studentdata.Lesson.LessonAdderActivity;
+import pangian.car.studentdata.Student.AddLessonToStudentActivity;
 import pangian.car.studentdata.Student.AllStudentsActivity;
 import pangian.car.studentdata.Student.StudentAdderActivity;
 
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton studentView;
     ImageButton lessonsAdder;
     ImageButton lessonsView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
          studentView = findViewById(R.id.students_view);
          lessonsAdder = findViewById(R.id.lessons_adder);
          lessonsView = findViewById(R.id.lessons_view);
+
     }
 
     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.lessons_view:
                         intent = new Intent(MainActivity.this, AllLessonsActivity.class);
                         startActivity(intent);
+                 break;
                 }
             }
         };
