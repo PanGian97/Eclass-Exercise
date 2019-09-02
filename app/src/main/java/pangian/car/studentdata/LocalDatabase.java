@@ -15,7 +15,7 @@ import pangian.car.studentdata.Lesson.LessonDao;
 import pangian.car.studentdata.Student.Student;
 import pangian.car.studentdata.Student.StudentDao;
 
-@Database(entities = {Student.class, Lesson.class}, version = 2 )
+@Database(entities = {Student.class, Lesson.class, StudentLessons.class}, version = 1,exportSchema = false)
 public abstract class LocalDatabase extends RoomDatabase {
 
 
@@ -54,8 +54,7 @@ public abstract class LocalDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            studentDao.insertStudent(new Student(15445,"Panagiotis","Giannelos"));
-            lessonDao.insertLesson(new Lesson(1,"Ma8imatika"));
+
             return null;
         }
     }

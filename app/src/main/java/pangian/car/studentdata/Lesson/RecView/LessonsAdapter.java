@@ -12,7 +12,6 @@ import java.util.List;
 
 import pangian.car.studentdata.Lesson.Lesson;
 import pangian.car.studentdata.R;
-import pangian.car.studentdata.Student.Student;
 
 public class LessonsAdapter extends RecyclerView.Adapter<LessonsViewHolder> {
 

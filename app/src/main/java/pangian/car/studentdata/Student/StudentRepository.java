@@ -1,7 +1,6 @@
 package pangian.car.studentdata.Student;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +12,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import pangian.car.studentdata.Lesson.Lesson;
 import pangian.car.studentdata.LocalDatabase;
 import pangian.car.studentdata.TaskHandler;
 
@@ -50,17 +50,33 @@ class StudentRepository {
         });
     }
 
+public void insertLessonForStudent(int studentAm,int lessonId){
+        studentDao.insertLessonForStudent(studentAm,lessonId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                         messageToBeShown.setValue("Lesson with id "+lessonId +"added to this student with AM "+studentAm);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+}
 
 
-
-    public LiveData<List<Student>> getAllStudents() {
-        return studentDao.getAllStudents();
-    }
 
 
 
     public void checkIfStudentExists(Student student) {
-      studentDao.isStudentValid(student.am).subscribeOn(Schedulers.io())
+      studentDao.isStudentValid(student.id).subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(new SingleObserver<Integer>() {
                   @Override
@@ -73,7 +89,7 @@ class StudentRepository {
                       if (studentInstances == 0) {
                           insertStudent(student);
                       } else {
-                          messageToBeShown.setValue("Student with AM = " + student.am + " already exists");
+                          messageToBeShown.setValue("Student with AM = " + student.id + " already exists");
                       }
                   }
 
@@ -88,13 +104,14 @@ class StudentRepository {
         return tasksToBeDone;
     }
 
-
-
-
-
-
    LiveData<String> messageHandler(){
         return messageToBeShown;
     }
 
+
+    public LiveData<List<Student>> getAllStudents() {
+        return studentDao.getAllStudents();
+    }
+    public LiveData<Student> getStudent(int studentAm) { return  studentDao.getStudent(studentAm);}
+    public LiveData<List<Lesson>> getAllStudentLessons(int studentAm){return studentDao.getAllStudentLessons(studentAm);}
 }

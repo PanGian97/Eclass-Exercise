@@ -1,30 +1,35 @@
 package pangian.car.studentdata.Student;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "student_table")
 public class Student {
 
     @PrimaryKey(autoGenerate = false)
-    int am;
-
+    @NotNull
+    @ColumnInfo(name= "student_id")
+    int id;
+    @ColumnInfo(name= "student_name")
     String name;
-
+    @ColumnInfo(name= "student_surname")
     String surname;
 
-    public Student( int am , String name, String surname) {
-        this.am = am;
+    public Student(int id, String name, String surname) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
     }
 
     public int getId() {
-        return am;
+        return id;
     }
 
     public void setId(int am) {
-        this.am = am;
+        this.id = am;
     }
 
     public String getName() {

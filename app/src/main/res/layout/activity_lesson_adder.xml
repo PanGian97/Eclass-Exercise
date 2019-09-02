@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/lesson_name"
+        android:id="@+id/student_lesson_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="SAVE"
-        app:layout_constraintEnd_toEndOf="@+id/lesson_name"
-        app:layout_constraintStart_toStartOf="@+id/lesson_name"
-        app:layout_constraintTop_toBottomOf="@+id/lesson_name" />
+        app:layout_constraintEnd_toEndOf="@+id/student_lesson_name"
+        app:layout_constraintStart_toStartOf="@+id/student_lesson_name"
+        app:layout_constraintTop_toBottomOf="@+id/student_lesson_name" />
 
     <EditText
         android:id="@+id/lesson_item_id"

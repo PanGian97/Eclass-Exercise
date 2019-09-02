@@ -6,11 +6,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import pangian.car.studentdata.R;
 import pangian.car.studentdata.Student.RecView.StudentsAdapter;
 
@@ -38,7 +42,19 @@ public class AllStudentsActivity extends AppCompatActivity {
     }
 
     private void handleStudentClick() {
-       studentsAdapter.g
+       Disposable disposable = studentsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
+           @Override
+           public void accept(Integer studentAm) throws Exception {
+              goToStudentDetails(studentAm);
+           }
+       });
+
+    }
+
+    private void goToStudentDetails(int studentAm) {
+        Intent intent = new Intent(AllStudentsActivity.this,StudentDetailsActivity.class);
+        intent.putExtra("student_am",studentAm);
+        startActivity(intent);
     }
 
     private void getStudents() {

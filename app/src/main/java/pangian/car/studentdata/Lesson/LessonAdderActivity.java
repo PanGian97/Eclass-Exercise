@@ -25,7 +25,7 @@ public class LessonAdderActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_adder);
-        lessonName = findViewById(R.id.lesson_name);
+        lessonName = findViewById(R.id.student_lesson_name);
         addLessonBtn = findViewById(R.id.add_lesson_btn);
         lessonId=findViewById(R.id.lesson_item_id);
 

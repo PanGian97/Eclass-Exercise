@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/am"
+        android:id="@+id/id_am"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/am" />
+        app:layout_constraintTop_toBottomOf="@+id/id_am" />
 
     <TextView
         android:id="@+id/title2"
@@ -64,7 +64,7 @@
         android:text="Add Student Page"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/am"
+        app:layout_constraintBottom_toTopOf="@+id/id_am"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

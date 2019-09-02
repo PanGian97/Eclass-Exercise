@@ -31,7 +31,7 @@ public class StudentAdderActivity extends AppCompatActivity {
 
         studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
 
-        stdntAm = findViewById(R.id.am);
+        stdntAm = findViewById(R.id.id_am);
         stdntSurName = findViewById(R.id.surname);
         stdntName = findViewById(R.id.name);
         addBtn = findViewById(R.id.add_btn);
@@ -52,9 +52,8 @@ public class StudentAdderActivity extends AppCompatActivity {
                         Integer.parseInt(am),
                         stdntName.getText().toString(),
                         stdntSurName.getText().toString());
-                {
 
-                }
+
             }
         });
 

@@ -22,9 +22,9 @@ public interface LessonDao {
     @Delete
     void deleteLesson(Lesson lesson);
 
-    @Query("SELECT * FROM lesson_table ORDER BY id ASC")
+    @Query("SELECT * FROM lesson_table ORDER BY lesson_id ASC")
     LiveData<List<Lesson>> getAllLessons();
 
-    @Query("SELECT COUNT(*) FROM lesson_table WHERE id =:lessonId")
+    @Query("SELECT COUNT(*) FROM lesson_table WHERE lesson_id =:lessonId")
     Single<Integer> isLessonValid(int lessonId);
 }
