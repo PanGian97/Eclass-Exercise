@@ -20,6 +20,7 @@ import pangian.car.studentdata.Student.RecView.StudentsAdapter;
 
 public class AllStudentsActivity extends AppCompatActivity {
 
+    private static final int ADD_LESSON_REQUEST = 1;
     StudentViewModel studentViewModel;
     private RecyclerView recyclerView;
     private StudentsAdapter studentsAdapter;
@@ -55,6 +56,7 @@ public class AllStudentsActivity extends AppCompatActivity {
         Intent intent = new Intent(AllStudentsActivity.this,StudentDetailsActivity.class);
         intent.putExtra("student_am_to_details",studentAm);
         startActivity(intent);
+
         finish();
     }
 

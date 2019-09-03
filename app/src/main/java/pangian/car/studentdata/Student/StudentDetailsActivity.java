@@ -1,5 +1,6 @@
 package pangian.car.studentdata.Student;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,21 +17,22 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import pangian.car.studentdata.Lesson.Lesson;
-import pangian.car.studentdata.Lesson.RecView.LessonsAdapter;
 import pangian.car.studentdata.LessonEnrollment;
 import pangian.car.studentdata.R;
 import pangian.car.studentdata.RecView.LessonsEnrollmentAdapter;
 
 public class StudentDetailsActivity extends AppCompatActivity {
 
+    private static final int ADD_LESSON_REQUEST = 1;
+    private static final int ADD_MARK_TO_LESSON_REQUEST = 2;
     TextView studentName;
     private RecyclerView recyclerView;
     private LessonsEnrollmentAdapter lessonsAdapter;
     StudentViewModel studentViewModel;
     Button addLessonToStudentBtn;
     Disposable disposable;
-    int studentAm;
+    private int studentAm;
+    private int lessonId;
 
 
     @Override
@@ -49,7 +51,7 @@ public class StudentDetailsActivity extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
             studentAm = intent.getIntExtra("student_am_to_details", 0);
-        prepareButtons(studentAm);
+        prepareAddLesson(studentAm);
         getStudent(studentAm);
         initLessonsRecView();
         getLessons(studentAm);
@@ -57,15 +59,26 @@ public class StudentDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void prepareButtons(int studentAm) {
+    private void prepareAddLesson(int studentAm) {
         addLessonToStudentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentDetailsActivity.this, AddLessonToStudentActivity.class);
-                intent.putExtra("student_am_to_add_lesson", studentAm);
-                startActivity(intent);
+                startActivityForResult(intent,ADD_LESSON_REQUEST);//only for result
+
             }
         });
+    }
+
+
+
+
+
+    private void addLessonToStudent(int lessonToAddId) {
+        studentViewModel.addStudentLesson(studentAm,lessonToAddId);
+    }
+    private void addMarkForLesson(double markToAdd) {
+        studentViewModel.addMarkForLesson(studentAm,lessonId,markToAdd);
     }
 
 
@@ -100,17 +113,47 @@ public class StudentDetailsActivity extends AppCompatActivity {
 
     private void handleClicks() {
         disposable = lessonsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
+
+
             @Override
             public void accept(Integer lessonId) throws Exception {
-                goToSetMark(lessonId);
+                goToSetMark();
+                StudentDetailsActivity.this.lessonId = lessonId;
             }
         });
     }
 
-    private void goToSetMark(Integer lessonId) {
+    private void goToSetMark() {
         Intent intent = new Intent(StudentDetailsActivity.this, AddMarkToStudentActivity.class);
-        intent.putExtra("lesson_id_to_set_mark", lessonId);
-        intent.putExtra("student_am_to_set_mark", studentAm);
-        startActivity(intent);
+        startActivityForResult(intent,ADD_MARK_TO_LESSON_REQUEST);//only for result
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        switch (requestCode){
+            case ADD_LESSON_REQUEST:
+                if(resultCode == RESULT_OK){
+                    assert data != null;
+                    int lessonToAddId = data.getIntExtra(AddLessonToStudentActivity.LESSON_TO_ADD,0);
+                    if(lessonToAddId!=0){
+                        addLessonToStudent(lessonToAddId);
+                    }
+                }
+                break;
+            case ADD_MARK_TO_LESSON_REQUEST:
+                if(resultCode == RESULT_OK){
+                    assert data !=null;
+                    double markToAdd = data.getDoubleExtra(AddMarkToStudentActivity.MARK_TO_ADD,0.0);
+                    if(markToAdd!=0){
+                        addMarkForLesson(markToAdd);
+                    }
+                }
+
+        }
+
     }
 }

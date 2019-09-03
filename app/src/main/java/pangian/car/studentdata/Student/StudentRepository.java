@@ -22,8 +22,8 @@ class StudentRepository {
 
 
     private StudentDao studentDao;
-    MutableLiveData<String> messageToBeShown = new MutableLiveData<>();
-    MutableLiveData<TaskHandler> tasksToBeDone = new MutableLiveData<>();
+    private MutableLiveData<String> messageToBeShown = new MutableLiveData<>();
+    private MutableLiveData<TaskHandler> tasksToBeDone = new MutableLiveData<>();
 
 
     public StudentRepository(Application application) {
