@@ -11,7 +11,7 @@ import pangian.car.studentdata.Student.Student;
 
 
 @Entity(tableName = "student_lessons", indices = {@Index(value = "index_student_id"),
-        @Index(value = "index_lesson_id")},
+        @Index(value = "index_lesson_id"), @Index(value = "index_student_mark")},
         foreignKeys = {@ForeignKey(entity = Student.class, parentColumns = "student_id", childColumns = "index_student_id"),
                 @ForeignKey(entity = Lesson.class, parentColumns = "lesson_id", childColumns = "index_lesson_id")})
 
@@ -23,6 +23,10 @@ public class StudentLessons {
     public int studentId;
     @ColumnInfo(name = "index_lesson_id")
     public int lessonId;
+    @ColumnInfo(name = "index_student_mark")
+    public double studentMark;
+
+
 
     public StudentLessons() {
 
@@ -50,5 +54,14 @@ public class StudentLessons {
     public void setLessonId(int lessonId) {
         this.lessonId = lessonId;
     }
+
+    public double getStudentMark() {
+        return studentMark;
+    }
+
+    public void setStudentMark(double studentMark) {
+        this.studentMark = studentMark;
+    }
+
 }
 

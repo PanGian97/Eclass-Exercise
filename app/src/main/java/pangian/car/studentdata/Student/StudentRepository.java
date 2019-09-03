@@ -8,11 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import io.reactivex.CompletableObserver;
+import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import pangian.car.studentdata.Lesson.Lesson;
+import pangian.car.studentdata.LessonEnrollment;
 import pangian.car.studentdata.LocalDatabase;
 import pangian.car.studentdata.TaskHandler;
 
@@ -66,12 +68,31 @@ public void insertLessonForStudent(int studentAm,int lessonId){
 
                     @Override
                     public void onError(Throwable e) {
-
+                        messageToBeShown.setValue("An error occured inserting lesson to student ");
                     }
                 });
 }
 
+    public void insertMarkToLessonForStudent(int studentAm, int lessonId,double mark) {
+      studentDao.insertMarkToLessonForStudent(studentAm,lessonId,mark).subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new CompletableObserver() {
+                  @Override
+                  public void onSubscribe(Disposable d) {
 
+                  }
+
+                  @Override
+                  public void onComplete() {
+                    messageToBeShown.setValue("Mark with value"+mark+"has been setted to Student with AM= "+studentAm);
+                  }
+
+                  @Override
+                  public void onError(Throwable e) {
+
+                  }
+              });
+    }
 
 
 
@@ -113,5 +134,7 @@ public void insertLessonForStudent(int studentAm,int lessonId){
         return studentDao.getAllStudents();
     }
     public LiveData<Student> getStudent(int studentAm) { return  studentDao.getStudent(studentAm);}
-    public LiveData<List<Lesson>> getAllStudentLessons(int studentAm){return studentDao.getAllStudentLessons(studentAm);}
+    public LiveData<List<LessonEnrollment>> getAllStudentLessons(int studentAm){return studentDao.getAllStudentLessons(studentAm);}
+
+
 }

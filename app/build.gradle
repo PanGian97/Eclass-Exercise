@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding-recyclerview:3.0.0'
 //leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

@@ -25,6 +25,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsViewHolder> {
 
 
     public Observable<Integer> getItemClickSignal() {
+
         return onClickSubject;
     }
 
@@ -32,13 +33,6 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsViewHolder> {
     @Override
     public StudentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_item, parent, false);
-
-
-        RxView.clicks(itemView)
-                .takeUntil(RxView.detaches(parent))
-                .map(aVoid -> currentStudent.getId())
-                .subscribe(onClickSubject);//?
-
 
         return new StudentsViewHolder(itemView);
     }
@@ -52,9 +46,16 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsViewHolder> {
         holder.nameTxt.setText(currentStudent.getName());
         holder.surnameTxt.setText(currentStudent.getSurname());
 
+        RxView.clicks(holder.itemView)
+                .map(aVoid ->getStudentIdAt(position))//different from int position?
+                .subscribe(onClickSubject);//?
+    }
 
-
-
+    //avoid memory leaks
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        onClickSubject.onComplete();
     }
 
     public void setStudents(List<Student> students){
@@ -62,10 +63,10 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsViewHolder> {
         notifyDataSetChanged();
     }
 
-//    public Student getStudentAt(int position)//now we can get the note of the adapter to the outside
-//    {
-//        return students.get(position);
-//    }
+    public int getStudentIdAt(int position)//now we can get the note of the adapter to the outside
+    {
+        return students.get(position).getId();
+    }
 
     @Override
     public int getItemCount() {

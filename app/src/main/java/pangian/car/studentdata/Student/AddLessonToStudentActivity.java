@@ -28,7 +28,7 @@ public class AddLessonToStudentActivity extends AppCompatActivity {
     Button addLessonBtn;
     StudentViewModel studentViewModel;
     LessonViewModel lessonViewModel;
-
+    Disposable disposable;
     private int studentAm;
     private RecyclerView recyclerView;
     private LessonsAdapter lessonsAdapter;
@@ -76,7 +76,7 @@ public class AddLessonToStudentActivity extends AppCompatActivity {
 
 
     private void handleClicks() {
-        Disposable disposable = lessonsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
+        disposable = lessonsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer lessonId) throws Exception {
                 addLessonToStudent(lessonId);
@@ -90,5 +90,9 @@ public class AddLessonToStudentActivity extends AppCompatActivity {
 
     private void addLessonToStudent(Integer lessonId) {
         studentViewModel.addStudentLesson(studentAm,lessonId);
+        Intent intent = new Intent(AddLessonToStudentActivity.this,StudentDetailsActivity.class);
+        intent.putExtra("student_am_to_details",studentAm);
+        startActivity(intent);
+        finish();
     }
 }

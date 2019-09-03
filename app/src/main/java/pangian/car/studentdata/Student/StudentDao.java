@@ -1,6 +1,7 @@
 package pangian.car.studentdata.Student;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,6 +13,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import pangian.car.studentdata.Lesson.Lesson;
+import pangian.car.studentdata.LessonEnrollment;
 
 @Dao
 public interface StudentDao {
@@ -31,18 +33,20 @@ public interface StudentDao {
     @Query("SELECT * FROM student_table WHERE student_id =:studentId")
     LiveData<Student> getStudent(int studentId);
 
-    @Query("SELECT lesson_id,lesson_title FROM lesson_table l " +
+    @Query("SELECT l.lesson_id,l.lesson_title,sl.index_student_mark FROM lesson_table l " +
             "INNER JOIN student_lessons sl ON sl.index_lesson_Id = l.lesson_id " +
             "INNER JOIN student_table s ON s.student_id = sl.index_student_id " +
-            "WHERE s.student_id =:studentId "
+            "WHERE sl.index_student_id =:studentId "
             )
-    LiveData<List<Lesson>> getAllStudentLessons(int studentId);
+    LiveData<List<LessonEnrollment>> getAllStudentLessons(int studentId);
 
 
 
-    @Query("INSERT INTO student_lessons VALUES (null,:studentId,:lessonId)")
+    @Query("INSERT INTO student_lessons VALUES (null,:studentId,:lessonId,0)")
     Completable insertLessonForStudent(int studentId,int lessonId);
 
+    @Query("UPDATE student_lessons SET index_student_mark=:mark WHERE index_student_id=:studentId AND index_lesson_id=:lessonId")
+    Completable insertMarkToLessonForStudent(int studentId,int lessonId,double mark);
 }
 
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import pangian.car.studentdata.Lesson.Lesson;
+import pangian.car.studentdata.LessonEnrollment;
 import pangian.car.studentdata.TaskHandler;
 
 public class StudentViewModel extends AndroidViewModel {
@@ -27,7 +28,7 @@ public class StudentViewModel extends AndroidViewModel {
         return studentRepository.getAllStudents();
     }
 
-    public LiveData<List<Lesson>> getAllStudentLessons(int studentId){return studentRepository.getAllStudentLessons(studentId);}
+    public LiveData<List<LessonEnrollment>> getAllStudentLessons(int studentId){return studentRepository.getAllStudentLessons(studentId);}
 
     public LiveData<Student> getStudent(int studentAm) { return studentRepository.getStudent(studentAm);}
 
@@ -40,10 +41,13 @@ public class StudentViewModel extends AndroidViewModel {
 
         public void addStudentLesson(int studentAm, int lessonId){
         studentRepository.insertLessonForStudent(studentAm,lessonId);}
+
     public LiveData<TaskHandler> taskHandler(){
         return studentRepository.taskHandler();
     }
 
 
-
+    public void addMarkForLesson(int studentAm, int lessonId,double mark) {
+        studentRepository.insertMarkToLessonForStudent(studentAm,lessonId,mark);
+    }
 }

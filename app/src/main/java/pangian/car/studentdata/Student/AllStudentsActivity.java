@@ -23,7 +23,7 @@ public class AllStudentsActivity extends AppCompatActivity {
     StudentViewModel studentViewModel;
     private RecyclerView recyclerView;
     private StudentsAdapter studentsAdapter;
-
+    Disposable disposable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class AllStudentsActivity extends AppCompatActivity {
     }
 
     private void handleStudentClick() {
-       Disposable disposable = studentsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
+       disposable = studentsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
            @Override
            public void accept(Integer studentAm) throws Exception {
               goToStudentDetails(studentAm);
@@ -55,6 +55,7 @@ public class AllStudentsActivity extends AppCompatActivity {
         Intent intent = new Intent(AllStudentsActivity.this,StudentDetailsActivity.class);
         intent.putExtra("student_am_to_details",studentAm);
         startActivity(intent);
+        finish();
     }
 
     private void getStudents() {
