@@ -47,6 +47,9 @@ public interface StudentDao {
 
     @Query("UPDATE student_lessons SET index_student_mark=:mark WHERE index_student_id=:studentId AND index_lesson_id=:lessonId")
     Completable insertMarkToLessonForStudent(int studentId,int lessonId,double mark);
+
+    @Query("SELECT COUNT(*) FROM student_lessons WHERE index_lesson_id =:lessonId AND index_student_id=:studentId")
+    Single<Integer> isStudentEnrolled(int studentId,int lessonId);
 }
 
 

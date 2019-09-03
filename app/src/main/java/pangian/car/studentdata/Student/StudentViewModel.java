@@ -40,7 +40,7 @@ public class StudentViewModel extends AndroidViewModel {
         studentRepository.checkIfStudentExists(new Student(am, name, surname)); }
 
         public void addStudentLesson(int studentAm, int lessonId){
-        studentRepository.insertLessonForStudent(studentAm,lessonId);}
+        studentRepository.checkIfStudentIsEnrolledToLesson(studentAm,lessonId);}
 
     public LiveData<TaskHandler> taskHandler(){
         return studentRepository.taskHandler();

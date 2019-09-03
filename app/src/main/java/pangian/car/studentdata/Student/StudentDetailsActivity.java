@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -51,15 +52,26 @@ public class StudentDetailsActivity extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
             studentAm = intent.getIntExtra("student_am_to_details", 0);
-        prepareAddLesson(studentAm);
+            initMessageHandler();
+        prepareAddLesson();
         getStudent(studentAm);
         initLessonsRecView();
         getLessons(studentAm);
         handleClicks();
     }
 
+    private void initMessageHandler() {
 
-    private void prepareAddLesson(int studentAm) {
+        studentViewModel.messageHandler().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                Toast.makeText(StudentDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void prepareAddLesson() {
         addLessonToStudentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

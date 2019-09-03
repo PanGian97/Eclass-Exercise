@@ -137,4 +137,28 @@ public void insertLessonForStudent(int studentAm,int lessonId){
     public LiveData<List<LessonEnrollment>> getAllStudentLessons(int studentAm){return studentDao.getAllStudentLessons(studentAm);}
 
 
+    public void checkIfStudentIsEnrolledToLesson(int studentAm, int lessonId) {
+        studentDao.isStudentEnrolled(studentAm,lessonId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Integer lessonInstances) {
+                        if (lessonInstances == 0) {
+                            insertLessonForStudent(studentAm,lessonId);
+                        } else {
+                            messageToBeShown.setValue("Student is already enrolled on this Lesson");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+    }
 }
