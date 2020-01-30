@@ -61,16 +61,11 @@ public class AllLessonsActivity extends AppCompatActivity {
         disposable = lessonsAdapter.getItemClickSignal().subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer lessonId) throws Exception {
-                goToLessonsDetails(lessonId);
+                //for future added content by selection a lesson
             }
         });
 
     }
 
-    private void goToLessonsDetails(int lessonId) {
-        Intent intent = new Intent(AllLessonsActivity.this,EnrolledStudents.class);
-        intent.putExtra("lesson_id_to_details",lessonId);
-        startActivity(intent);
-        finish();
-    }
+
 }
