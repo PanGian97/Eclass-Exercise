@@ -20,10 +20,12 @@ import pangian.car.studentdata.Student.StudentViewModel;
 
 public class EnrolledStudents extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private StudentsEnrolledAdapter enrolledAdapter;
+   // private StudentsEnrolledAdapter enrolledAdapter;
     StudentViewModel studentViewModel;
     Disposable disposable;
     int lessonId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class EnrolledStudents extends AppCompatActivity {
         Intent intent = getIntent();
         lessonId = intent.getIntExtra("lesson_id_to_details", 0);
         initMessageHandler();
-        initStudentsRecView();
+    //    initStudentsRecView();
     }
 
     private void initMessageHandler() {
@@ -51,21 +53,21 @@ public class EnrolledStudents extends AppCompatActivity {
         });
     }
 
-    private void initStudentsRecView() {
-        recyclerView = findViewById(R.id.enrolled_students_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        enrolledAdapter = new StudentsEnrolledAdapter();
-        recyclerView.setAdapter(enrolledAdapter);
-    }
-
-    private void getLessons(int studentAm) {
-        studentViewModel.getAllStudentLessons(studentAm).observe(this, new Observer<List<LessonEnrollment>>() {
-            @Override
-            public void onChanged(List<LessonEnrollment> studentLessons) {
-                if (studentLessons.size() != 0) {
-                    lessonsAdapter.setLessons(studentLessons);
-                }
-            }
-        });
-    }
+//    private void initStudentsRecView() {
+//        recyclerView = findViewById(R.id.enrolled_students_recyclerview);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        enrolledAdapter = new StudentsEnrolledAdapter();
+//        recyclerView.setAdapter(enrolledAdapter);
+//    }
+//
+//    private void getLessons(int studentAm) {
+//        studentViewModel.getAllStudentLessons(studentAm).observe(this, new Observer<List<LessonEnrollment>>() {
+//            @Override
+//            public void onChanged(List<LessonEnrollment> studentLessons) {
+//                if (studentLessons.size() != 0) {
+//                    lessonsAdapter.setLessons(studentLessons);
+//                }
+//            }
+//        });
+//    }
 }

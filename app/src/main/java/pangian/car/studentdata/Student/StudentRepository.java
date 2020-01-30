@@ -121,15 +121,13 @@ public void insertLessonForStudent(int studentAm,int lessonId){
               });
     }
 
+
     public LiveData<TaskHandler> taskHandler() {
         return tasksToBeDone;
     }
-
-   LiveData<String> messageHandler(){
+    public  LiveData<String> messageHandler(){
         return messageToBeShown;
     }
-
-
     public LiveData<List<Student>> getAllStudents() {
         return studentDao.getAllStudents();
     }
